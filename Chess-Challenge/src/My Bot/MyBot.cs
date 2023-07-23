@@ -18,22 +18,22 @@ public class MyBot : IChessBot
         {
             int dist = Math.Abs(moves[i].TargetSquare.Index - moves[i].StartSquare.Index);
 
-            //score[i] += moves[i].MovePieceType == PieceType.King ? -5 : (moves[i].MovePieceType == PieceType.Queen) ? 3 : 0;
             switch (moves[i].MovePieceType)
             {
                 case PieceType.King:
-                    score[i] = 0;break;
+                    score[i] = (moves[i].IsCapture ? 8 : 0);break;
                 case PieceType.Queen:
-                    score[i] = 9;break;
+                    score[i] = 9 + (moves[i].IsCapture? 10:-4);break;
                 case PieceType.Pawn:
-                    score[i] = 4;break;
+                    score[i] = 10;break;
                 case PieceType.Knight:
-                    score[i] = 6;break;
+                    score[i] = 6+dist/10+ (moves[i].IsCapture? 4:-1);break;
+                
                 case PieceType.Rook:
                     score[i] = dist/16;break;
                 default:score[i] = 2; break;
             }
-           score[i]+= (moves[i].IsCapture ? (5+dist) : (moves[i].IsPromotion )? 8:dist/2);
+           //score[i]+= (moves[i].IsCapture ? (5+dist) : (moves[i].IsPromotion )? 8:dist/2);
         }
         return score.ToList().IndexOf(score.Max());
     }
