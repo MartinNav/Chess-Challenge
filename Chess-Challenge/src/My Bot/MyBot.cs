@@ -24,14 +24,16 @@ public class MyBot : IChessBot
                 case PieceType.King:
                     score[i] = 0;break;
                 case PieceType.Queen:
-                    score[i] = 3;break;
+                    score[i] = 9;break;
                 case PieceType.Pawn:
-                    score[i] = 3;break;
-                case PieceType.Knight:
                     score[i] = 4;break;
-                default:score[i] = 1; break;
+                case PieceType.Knight:
+                    score[i] = 6;break;
+                case PieceType.Rook:
+                    score[i] = dist/16;break;
+                default:score[i] = 2; break;
             }
-           score[i]*= (moves[i].IsCapture ? (5+dist) : (moves[i].IsPromotion /*|| moves[i].CapturePieceType!=null*/)? 8:dist/2);
+           score[i]+= (moves[i].IsCapture ? (5+dist) : (moves[i].IsPromotion )? 8:dist/2);
         }
         return score.ToList().IndexOf(score.Max());
     }
